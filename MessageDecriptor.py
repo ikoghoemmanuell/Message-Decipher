@@ -3,43 +3,50 @@ import platform
 
 #create string for all letters
 plain='ABCDEFGHIJKLMNOPQRSTUVWXYZ'
-cypher='XYZABCDEFGHIJKLMNOPQRSTUVW'
+totalPositions=len(plain)
 
 #create myFunction 
 def myFunction():
-    #display options (encrypt and decript)
-    print('\n1. Decript \n2. Encript')
+    #create encription function to accept message and print coded message
+    def encriptMessage():
+        encripted=''
+        #ask the user for a message
+        message=input('Type a message that you want to encript: ').upper()
+        shift=int(input(f'How many shifts to the right(1-{totalPositions}): '))
+        for letter in message:
+            if letter in plain:
+                position=plain.index(letter)+shift
+                if position>totalPositions-1:
+                    encripted+=plain[position-totalPositions]
+                else:encripted+=plain[position]
+            else:
+                encripted+=letter
+        print(f'Your encripted message: {encripted}')        
 
     #create decription function to accept coded message and print original message
-    def deCript(message):
-        deCodedText=''
-        for letter in message.upper():
-            if letter in cypher:
-                deCodedText+=plain[cypher.index(letter)]
-            else: 
-                deCodedText+=letter
-        print(f'original message is: {deCodedText}')
-
-    #create encription function to accept message and print coded message
-    def enCript(message):
-        codedText=''
-        for letter in message.upper():
+    def decriptMessage():
+        decripted=''
+        #ask the user for a message
+        message=input('Type a message that you want to decript: ').upper()
+        shift=int(input(f'How many shifts to the right was your encription(1-{totalPositions}): '))
+        for letter in message:
             if letter in plain:
-                codedText+=cypher[plain.index(letter)]
-            else: 
-                codedText+=letter
-        print(f'coded message is: {codedText}')
+                position=plain.index(letter)-shift
+                if position>totalPositions+1:
+                    decripted+=plain[position+totalPositions]
+                else:decripted+=plain[position]
+            else:
+                decripted+=letter
+        print(f'Your original message: {decripted}')        
 
-    #ask the user to choose decript or encript
-    choice=input('Pick 1 or 2: ').lower()
-
-    #decode or encript based on user's choice 
-    if choice=='1':
-        deCript(input('\nEnter Coded Message: '))
-    elif choice=='2':
-        enCript(input('\nEnter Original Message: '))
+    #ask user if encrypt or decript
+    choice=input('encript or decript? ').lower()
+    if choice=='encript':
+        encriptMessage()
+    elif choice=='decript':
+        decriptMessage()
     else:
-        print('Wrong! (1/2)')
+        print('wrong! (encript/decript)')
 
 #repeat the program if user says yes
 def runAgain():
